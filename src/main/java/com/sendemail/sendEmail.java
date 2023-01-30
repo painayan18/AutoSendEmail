@@ -1,5 +1,6 @@
 package com.sendemail;
 
+import java.lang.String;
 import java.sql.Array;
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 
 public class sendEmail {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         ArrayList<String> names = new ArrayList<String>();
         ArrayList<Boolean> knowMore = new ArrayList<Boolean>();
@@ -112,12 +113,13 @@ public class sendEmail {
 
             for (int x = 0; x < rowCount; x++) {
                 value = formatter.formatCellValue(sheet.getRow(x + 1).getCell(1));
-
-                if (value == "Yes") {
+//                temp = sheet.getRow(x + 1).getCell(1).getStringCellValue();
+                if (value.equals("Yes")) {
                     knowMore.add(true);
                 } else {
                     knowMore.add(false);
                 }
+
             }
 
 
@@ -193,6 +195,8 @@ public class sendEmail {
 
         // To debug SMTP issues
         session.setDebug(true);
+
+        String name;
 
         for (int i = 0; i < names.size(); i++) {
             if(knowMore.get(i)) {
